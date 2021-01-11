@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+    border: 1px solid #0066A2;
+    background-color: #0066A2;
+    padding: 10px 15px;
+    color: #fff;
+    transition: .3s ease-in-out;
+    margin-top: 15px;
+}
+
+a:hover {
+    background-color: #fff;
+    color: #0066A2;
+}
+
+.disabled {
+    background-color: gray;
+    pointer-events: none;
+    cursor: default;
+}
+
+.disabled:hover {
+    background-color: gray;
+    color: #fff;
+}
