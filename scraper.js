@@ -32,7 +32,6 @@ async function scrapeDataLinks(arrayOfContainingIDs = []) {
 
         let ukupnoStranica = Math.ceil(ukupno / prikazPoStranici)
 
-        // console.log(ukupnoStranica)
 
         for(page; page < ukupnoStranica; page++) {
             try {
@@ -42,10 +41,8 @@ async function scrapeDataLinks(arrayOfContainingIDs = []) {
                 }
         
                 let linkovi = $('#left_column_holder').find('.thumb_div a').toArray()
-                // console.log(linkovi)
 
                 linkovi.forEach(el => {
-                    // console.log(el.attribs.href)
                     let id = el.attribs.href.split('/')[el.attribs.href.split('/').length - 1]
                     if(arrayOfContainingIDs.includes(id)) {
                         // skip
@@ -100,8 +97,6 @@ async function scrapePage(arr) {
             }
 
 
-            // let testArrayyy = ['ID','Naslov','Vrsta','Područje','Lokacija','Cijena','Spavaćih Soba','Kupatila',"Stambena Površina",'Zemljište','Parking Mjesta','Od Mora (m)','Novogradnja','Klima Uređaj','Opis','Oglasio','Mobitel','Zadnja Promjena','Web Stranica','Slike','Url']
-
             objectData['Naslov'] = $('#listing_body h2').text()
             $('#listing_body').find('strong').toArray().forEach(el => {
                 let tagName = el['children'][0].data
@@ -143,10 +138,6 @@ async function scrapePage(arr) {
 
 
 
-// scrapePage(['https://www.realitica.com/hr/listing/1621190', 'https://www.realitica.com/hr/listing/2290984'])
-
-
-
 
 async function writeToCSV() {
     try {
@@ -165,12 +156,10 @@ async function writeToCSV() {
         
         let dataLinks = await scrapeDataLinks(currentIDs)
         let dataForCSV = await scrapePage(dataLinks)
-        // let dataForCSV = await scrapePage(['https://www.realitica.com/hr/listing/1621190', 'https://www.realitica.com/hr/listing/2290984'])
 
 
         console.log(dataForCSV)
         const csv = new objectsToCSV(dataForCSV)
-        // console.log(csv)
         await csv.toDisk(filePath, { append: true })
     } catch {
         console.log('error')
@@ -178,35 +167,5 @@ async function writeToCSV() {
 }
 
 
-writeToCSV()
 
-
-
-
-
-/**
- * 
- * Vrsta smjestaja(string), ------ Vrsta
- * područje(string),​ ----- Podrucje
- * lokacija(string), ----- Lokacija
- * broj spavaćih soba(int), ----- Spavacih Soba
- * broj kupila(int), ----- Kupatila
- * cijena(float), ----- Cijena
- * stambena površina(int,m^2), ------ Stambena Povrsina
- * zemljište(int,m^2), (default stan) Zemljiste
- * parking mjesta(int), ----- Parking Mjesta
- * od mora(metara,int), ------ Od Mora (m)
- * novogradnja(boolean), ----- Novogradnja
- * klima(boolean),​ ------ Klima Uredjaj
- * naslov(string),​ ------ Naslov
- * opis(string), ------- Opis
- * webstranica(string),​ ----- Web Stranica
- * oglasio(string),​ --------- Oglasio
- * mobilni(string), -------- Mobitel
- * ​broj/idoglasa(int), ------- ID
- * zadnja promjena (datetime), ​ ------ Zadnja Promjena
- * slike​ (lista linkova slika, string), Slike
- * ​url ------- Url
- * 
- * 
- */
+module.exports = writeToCSV
